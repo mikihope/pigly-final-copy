@@ -7,6 +7,7 @@
 ## 📊 ER図
 ![ER図](./er.png)
 
+
 ---
 
 ## 🚀 使用技術
@@ -74,7 +75,3 @@ php artisan key:generate
 php artisan migrate --seed
 php artisan serve
 
-👤 ログインテストユーザー
-メールアドレス	パスワード
-test@example.com
-	password
