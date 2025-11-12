@@ -71,10 +71,11 @@
                 <td>{{ $weight->weight }}kg</td>
                 <td>{{ $weight->calorie }}cal</td>
                 <td>{{ $weight->exercise_time }}</td>
-                <td>
-                     <a href="{{ route('weights.edit', $weight->id) }}">
-                     <img src="{{ asset('images/edit_icon.png') }}" alt="編集" class="edit-icon">
-                     </a>
+                <td class="text-end">
+                    <a href="{{ route('weights.edit', $weight->id) }}">
+                       <img src="{{ asset('鉛筆.png') }}" alt="編集" class="edit-icon">
+                    </a>
+
                 </td>
             </tr>
             @endforeach

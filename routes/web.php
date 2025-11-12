@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeightController;
-use App\Http\Controllers\WeightTargetController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TargetController;
+
+Route::resource('targets',TargetController::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +28,6 @@ Route::get('/weights', [WeightController::class, 'index'])
     ->name('weights.index')
     ->middleware('auth');
 
-// 目標体重の編集ページ（ログイン必須）
-Route::get('/weight/target/edit', [WeightTargetController::class, 'edit'])
-    ->name('weights.edit')
-    ->middleware('auth');
 
 // 目標体重の更新処理（ログイン必須）
 Route::put('/weight/target/update', [WeightTargetController::class, 'update'])
