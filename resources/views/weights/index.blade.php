@@ -7,7 +7,7 @@
     <div class="header">
         <h1 class="logo">PiGLy</h1>
         <div class="header-buttons">
-            <a href="{{ route('weights.edit')}}" class="btn target-btn">目標体重設定</a>
+            <a href="{{ route('targets.edit')}}" class="btn target-btn">目標体重設定</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="btn logout-btn">ログアウト</button>
@@ -39,12 +39,10 @@
         <button type="submit" class="btn search-btn">検索</button>
 
         @if(request('from') || request('to'))
-    <a href="{{ route('weights.index') }}" class="btn reset-btn">リセット</a>
-    <p class="search-result">
-        {{ request('from') }}〜{{ request('to') }} の検索結果　{{ $weights->count() }}件
-    </p>
-
-
+        <a href="{{ route('weights.index') }}" class="btn reset-btn">リセット</a>
+        <p class="search-result">
+            {{ request('from') }}〜{{ request('to') }} の検索結果　{{ $weights->count() }}件
+        </p>
         @endif
     </form>
 
@@ -73,14 +71,11 @@
                 <td>{{ $weight->exercise_time }}</td>
                 <td class="text-end">
                     <a href="{{ route('weights.edit', $weight->id) }}">
-                       <img src="{{ asset('鉛筆.png') }}" alt="編集" class="edit-icon">
+                        <img src="{{ asset('鉛筆.png') }}" alt="編集" class="edit-icon">
                     </a>
-
                 </td>
             </tr>
             @endforeach
-
-
         </tbody>
     </table>
 
@@ -128,12 +123,59 @@
         </form>
     </div>
 </div>
+
+{{-- モーダルCSS（必須） --}}
 <style>
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.modal.hidden {
+    display: none;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+}
 .hover-row:hover {
     background-color: #f5f5f5;
     transition: background-color 0.2s ease;
 }
 </style>
 
+{{-- モーダル用スクリプト --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('modal');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+
+    openBtn.addEventListener('click', function () {
+        modal.classList.remove('hidden');
+    });
+
+    closeBtn.addEventListener('click', function () {
+        modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+});
+</script>
 @endsection
 

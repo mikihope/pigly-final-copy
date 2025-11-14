@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\WeightLog;
 use App\Models\WeightTarget;
+use App\Http\Requests\UpdateWeightRequest;
 
 class WeightController extends Controller
 {
@@ -51,21 +52,23 @@ class WeightController extends Controller
         return view('weights.edit', compact('weight'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateWeightRequest $request, $id)
     {
-        $weight = WeightLog::findOrFail($id);
+    $weight = WeightLog::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->firstOrFail();
 
-        $validated = $request->validate([
-            'date' => 'required|date',
-            'weight' => 'required|numeric',
-            'calorie' => 'required|integer',
-            'exercise_time' => 'required',
-            'exercise_content' => 'required|string',
-        ]);
+    $weight->update($request->validated());
 
-        $weight->update($validated);
+    return redirect()->route('weights.index')->with('success', '更新しました！');
+     }
 
-        return redirect()->route('weights.index');
-    }
+    public function destroy($id)
+     {
+    $weight = WeightLog::findOrFail( $id );
+    $weight->delete();
+
+    return redirect()->route('weights.index');
+     }
 }
 
